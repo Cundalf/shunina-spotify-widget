@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Player para Mi Shunita hermosa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;1,400;1,600&display=swap"
+        rel="stylesheet">
+    <style>
+        .poppins-regular {
+            font-family: "Poppins", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            }
+
+            .poppins-semibold {
+            font-family: "Poppins", sans-serif;
+            font-weight: 600;
+            font-style: normal;
+            }
+
+            .poppins-regular-italic {
+            font-family: "Poppins", sans-serif;
+            font-weight: 400;
+            font-style: italic;
+            }
+
+            .poppins-semibold-italic {
+            font-family: "Poppins", sans-serif;
+            font-weight: 600;
+            font-style: italic;
+            }
+
+        
+        
+        body {
+            margin: 0;
+            background: transparent;
+            font-family: "Poppins", sans-serif;
+            font-weight: 600;
+            font-style: normal;
+            overflow: hidden;
+        }
+
+        .player-container {
+                position: relative;
+                width: 340px;
+                height: 120px;
+                background: linear-gradient(135deg, #FFB6C1 0%, #FEEFF4 100%);
+                border-radius: 25px;
+                overflow: hidden;
+                box-shadow: 0 8px 32px rgba(255, 158, 181, 0.3);
+                margin-top: 10px;
+                box-sizing: border-box;
+                margin-left: 100px;
+                border: 3px solid #FFC0CB;
+        }
+
+        .background-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #ff69b4;
+            border-radius: 50%;
+            opacity: 0;
+            animation: float 3s ease-in-out infinite;
+            transition: opacity 1s ease-out;
+        }
+
+        .particle:nth-child(odd) {
+            background: #ff1493;
+        }
+
+        .particle.flower {
+            width: 12px;
+            height: 12px;
+            background: none;
+            border-radius: 0;
+            transition: opacity 1s ease-out;
+        }
+
+        .particle.flower::before {
+            content: '🌸';
+            font-size: 12px;
+            position: absolute;
+            top: -2px;
+            left: -2px;
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0;
+            }
+            25% {
+                opacity: 0.6;
+            }
+            50% { 
+                transform: translateY(-20px) rotate(180deg);
+                opacity: 0.8;
+            }
+            75% {
+                opacity: 0.4;
+            }
+        }
+
+        .album-cover {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 140px;
+            height: 140px;
+            border-radius: 30px;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            z-index: 3;
+            background: white;
+            box-sizing: border-box;
+        }
+
+        .album-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .playing .album-cover img {
+            animation: rotate 20s linear infinite;
+        }
+
+        .paused .album-cover img {
+            animation: none;
+        }
+
+        .song-info {
+            position: absolute;
+            left: 60px;
+            top: 20px;
+            right: 80px;
+            z-index: 2;
+        }
+
+        .song-title {
+            font-size: 18px;
+            font-weight: bold;
+            color:rgba(42, 42, 42, 0.9);
+            margin: 0;
+                text-shadow: rgb(255, 255, 255) 1px 0px 0px, rgb(255, 255, 255) 0.540302px 0.841471px 0px, rgb(255, 255, 255) -0.416147px 0.909297px 0px, rgb(255, 255, 255) -0.989992px 0.14112px 0px, rgb(255, 255, 255) -0.653644px -0.756802px 0px, rgb(255, 255, 255) 0.283662px -0.958924px 0px, rgb(255, 255, 255) 0.96017px -0.279415px 0px;
+        }
+
+        .artist-name {
+            font-size: 14px;
+            color: rgba(85,85,85, 0.9);
+            margin: 0;
+                text-shadow: rgb(255, 255, 255) 1px 0px 0px, rgb(255, 255, 255) 0.540302px 0.841471px 0px, rgb(255, 255, 255) -0.416147px 0.909297px 0px, rgb(255, 255, 255) -0.989992px 0.14112px 0px, rgb(255, 255, 255) -0.653644px -0.756802px 0px, rgb(255, 255, 255) 0.283662px -0.958924px 0px, rgb(255, 255, 255) 0.96017px -0.279415px 0px;
+        }
+
+        .controls {
+            position: absolute;
+            left: 60px;
+            bottom: 15px;
+            display: flex;
+            gap: 15px;
+            z-index: 2;
+        }
+
+        .control-btn {
+            width: 25px;
+            height: 25px;
+            background: rgba(255, 182, 193, 0.9);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(42, 42, 42, 0.9);
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: rgba(42, 42, 42, 1);
+            transform: scale(1.1);
+        }
+
+        .audio-visualizer {
+            position: absolute;
+            right: 25px;
+            bottom: 15px;
+            display: flex;
+            align-items: flex-end;
+            gap: 3px;
+            z-index: 2;
+            height: 25px;
+        }
+
+        .audio-bar {
+            width: 4px;
+            background: rgba(255, 182, 193, 0.8);
+            border-radius: 2px;
+            transition: all 0.1s ease;
+            min-height: 8px;
+            border: 1px solid rgba(42, 42, 42, 0.2);
+        }
+
+
+
+        .hidden {
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+        }
+
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 0 0 60px 60px;
+            transition: width 1s linear;
+        }
+    </style>
+</head>
+<body>
+    <div class="album-cover">
+        <img src="profile.jpg" alt="Profile Picture" id="albumCover">
+    </div>
+    
+    <div class="player-container" id="player">
+        <div class="background-particles" id="particles"></div>
+
+        <div class="song-info">
+            <h3 class="song-title" id="songTitle">Conectando...</h3>
+            <p class="artist-name" id="artistName">Spotify</p>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn" id="prevBtn">⏮</button>
+            <button class="control-btn" id="playBtn">▶</button>
+            <button class="control-btn" id="nextBtn">⏭</button>
+        </div>
+
+        <div class="audio-visualizer" id="visualizer">
+            <!-- Las barras se generan dinámicamente -->
+        </div>
+
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <script>
+        class SpotifyPlayer {
+            constructor() {
+                this.isPlaying = false;
+                this.currentSong = null;
+                this.tempo = 120; // BPM por defecto
+                this.energy = 0.5; // Energía por defecto
+                this.particles = [];
+                this.visualizerBars = [];
+                
+                this.initializeElements();
+                this.createVisualizer();
+                this.createParticles();
+                this.startDemo();
+            }
+
+            initializeElements() {
+                this.player = document.getElementById('player');
+                this.particlesContainer = document.getElementById('particles');
+                this.albumCover = document.getElementById('albumCover');
+                this.songTitle = document.getElementById('songTitle');
+                this.artistName = document.getElementById('artistName');
+                this.playBtn = document.getElementById('playBtn');
+                this.visualizer = document.getElementById('visualizer');
+                this.progressBar = document.getElementById('progressBar');
+
+                // Event listeners
+                this.playBtn.addEventListener('click', () => this.togglePlay());
+                document.getElementById('prevBtn').addEventListener('click', () => this.previousTrack());
+                document.getElementById('nextBtn').addEventListener('click', () => this.nextTrack());
+            }
+
+            createVisualizer() {
+                // Crear 7 barras para el visualizador
+                for (let i = 0; i < 7; i++) {
+                    const bar = document.createElement('div');
+                    bar.className = 'audio-bar';
+                    bar.style.height = '8px';
+                    this.visualizer.appendChild(bar);
+                    this.visualizerBars.push(bar);
+                }
+            }
+
+            createParticles() {
+                // Crear partículas de fondo
+                for (let i = 0; i < 15; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = Math.random() > 0.7 ? 'particle flower' : 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.top = Math.random() * 100 + '%';
+                    particle.style.animationDelay = Math.random() * 3 + 's';
+                    particle.style.animationDuration = (2 + Math.random() * 3) + 's';
+                    this.particlesContainer.appendChild(particle);
+                    this.particles.push(particle);
+                }
+            }
+
+            updateParticleSpeed(bpm) {
+                // Ajustar velocidad de partículas según BPM - más notorio
+                const baseDuration = 3;
+                const speed = Math.max(0.8, baseDuration - (bpm - 60) / 40); // Cambio más dramático
+                this.particles.forEach((particle, index) => {
+                    particle.style.animationDuration = (speed + Math.random() * 0.5) + 's';
+                });
+            }
+
+            animateVisualizer() {
+                if (!this.isPlaying) {
+                    // Hacer que las barras vuelvan a su altura mínima
+                    this.visualizerBars.forEach(bar => {
+                        bar.style.height = '8px';
+                    });
+                    return;
+                }
+
+                // Simular barras de audio basadas en la energía
+                this.visualizerBars.forEach((bar, index) => {
+                    const baseHeight = 8;
+                    const maxHeight = 40;
+                    const randomMultiplier = 0.5 + Math.random() * 0.5;
+                    const energyMultiplier = this.energy * randomMultiplier;
+                    const height = baseHeight + (maxHeight - baseHeight) * energyMultiplier;
+                    
+                    bar.style.height = height + 'px';
+                });
+
+                // Repetir animación más rápido con música más energética
+                const interval = Math.max(50, 200 - (this.energy * 150));
+                setTimeout(() => this.animateVisualizer(), interval);
+            }
+
+            togglePlay() {
+                this.isPlaying = !this.isPlaying;
+                this.playBtn.textContent = this.isPlaying ? '⏸' : '▶';
+                this.player.className = this.isPlaying ? 'player-container playing' : 'player-container paused';
+                
+                if (this.isPlaying) {
+                    this.showParticles();
+                    this.animateVisualizer();
+                } else {
+                    this.hideParticles();
+                }
+            }
+
+            hideParticles() {
+                this.particles.forEach(particle => {
+                    particle.style.opacity = '0';
+                    // Después de la transición, pausar la animación
+                    setTimeout(() => {
+                        particle.style.animationPlayState = 'paused';
+                    }, 1000); // 1 segundo para que coincida con la transición
+                });
+            }
+
+            showParticles() {
+                this.particles.forEach(particle => {
+                    particle.style.animationPlayState = 'running';
+                    particle.style.opacity = '1';
+                });
+            }
+
+            updateSongInfo(title, artist, albumCoverUrl, audioFeatures) {
+                this.songTitle.textContent = title;
+                this.artistName.textContent = artist;
+                
+                if (albumCoverUrl) {
+                    this.albumCover.src = albumCoverUrl;
+                }
+
+                if (audioFeatures) {
+                    this.tempo = audioFeatures.tempo || 120;
+                    this.energy = audioFeatures.energy || 0.5;
+                    this.updateParticleSpeed(this.tempo);
+                }
+            }
+
+            // Funciones para conectar con Spotify API
+            previousTrack() {
+                console.log('Previous track');
+                // Aquí irían las llamadas a Spotify API
+            }
+
+            nextTrack() {
+                console.log('Next track');
+                // Aquí irían las llamadas a Spotify API
+            }
+
+            // Demo con canciones de ejemplo
+            startDemo() {
+                const demoSongs = [
+                    {
+                        title: "Demonios",
+                        artist: "Mau y Ricky",
+                        tempo: 95,
+                        energy: 0.7,
+                        albumCover: "profile.jpg"
+                    },
+                    {
+                        title: "Bad Bunny Mix",
+                        artist: "Bad Bunny",
+                        tempo: 130,
+                        energy: 0.9,
+                        albumCover: "profile.jpg"
+                    }
+                ];
+
+                let currentIndex = 0;
+
+                // Cambiar canción cada 10 segundos para demo
+                setInterval(() => {
+                    const song = demoSongs[currentIndex];
+                    this.updateSongInfo(song.title, song.artist, song.albumCover, {
+                        tempo: song.tempo,
+                        energy: song.energy
+                    });
+                    currentIndex = (currentIndex + 1) % demoSongs.length;
+                }, 10000);
+
+                // Inicializar con la primera canción
+                this.updateSongInfo(demoSongs[0].title, demoSongs[0].artist, demoSongs[0].albumCover, {
+                    tempo: demoSongs[0].tempo,
+                    energy: demoSongs[0].energy
+                });
+            }
+        }
+
+        // Inicializar el reproductor
+        const player = new SpotifyPlayer();
+
+        // Simular conexión con Spotify
+        setTimeout(() => {
+            document.getElementById('songTitle').textContent = 'Haz click en play';
+            document.getElementById('artistName').textContent = 'Para empezar';
+        }, 2000);
+    </script>
+</body>
+</html>
