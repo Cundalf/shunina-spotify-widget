@@ -9,8 +9,6 @@ README.md
 .env
 .nyc_output
 coverage
-.nyc_output
-.coverage
 .vscode
 .idea
 *.log
