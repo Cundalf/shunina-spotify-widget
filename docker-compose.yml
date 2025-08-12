@@ -6,7 +6,7 @@ services:
     container_name: spotify-widget
     restart: unless-stopped
     ports:
-      - "8080:8080"
+      - "8123:8080"
     environment:
       - SPOTIFY_CLIENT_ID=${SPOTIFY_CLIENT_ID}
       - SPOTIFY_CLIENT_SECRET=${SPOTIFY_CLIENT_SECRET}

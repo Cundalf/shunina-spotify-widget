@@ -1,0 +1,284 @@
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+
+/* Font Classes */
+.poppins-regular {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.poppins-semibold {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.poppins-regular-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.poppins-semibold-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: italic;
+}
+
+/* Base Styles */
+body {
+    margin: 0;
+    background: transparent;
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    overflow: hidden;
+}
+
+/* Player Container */
+.player-container {
+    position: relative;
+    width: 400px;
+    height: 120px;
+    background: linear-gradient(135deg, #FFB6C1 0%, #FEEFF4 100%);
+    border-radius: 25px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(255, 158, 181, 0.3);
+    margin-top: 10px;
+    box-sizing: border-box;
+    margin-left: 100px;
+    border: 3px solid #FFC0CB;
+}
+
+/* Background Particles */
+.background-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: none;
+    border-radius: 0;
+    opacity: 0;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: -20px;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+    animation-iteration-count: 1;
+}
+
+@keyframes fallDown {
+    0% {
+        transform: translateY(-20px) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(140px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.particle.paused {
+    animation-play-state: paused !important;
+}
+
+.particle.playing {
+    animation-play-state: running !important;
+}
+
+/* Album Cover */
+.album-cover {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 140px;
+    height: 140px;
+    border-radius: 30px;
+    overflow: hidden;
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    z-index: 3;
+    background: white;
+    box-sizing: border-box;
+}
+
+.album-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.playing .album-cover img {
+    animation: rotate 20s linear infinite;
+}
+
+.paused .album-cover img {
+    animation: none;
+}
+
+/* Song Information */
+.song-info {
+    position: absolute;
+    left: 60px;
+    top: 20px;
+    right: 80px;
+    z-index: 2;
+}
+
+.song-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: rgba(42, 42, 42, 0.9);
+    margin: 0;
+    text-shadow: rgb(255, 255, 255) 1px 0px 0px, rgb(255, 255, 255) 0.540302px 0.841471px 0px, rgb(255, 255, 255) -0.416147px 0.909297px 0px, rgb(255, 255, 255) -0.989992px 0.14112px 0px, rgb(255, 255, 255) -0.653644px -0.756802px 0px, rgb(255, 255, 255) 0.283662px -0.958924px 0px, rgb(255, 255, 255) 0.96017px -0.279415px 0px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.artist-name {
+    font-size: 14px;
+    color: rgba(85, 85, 85, 0.9);
+    margin: 0;
+    text-shadow: rgb(255, 255, 255) 1px 0px 0px, rgb(255, 255, 255) 0.540302px 0.841471px 0px, rgb(255, 255, 255) -0.416147px 0.909297px 0px, rgb(255, 255, 255) -0.989992px 0.14112px 0px, rgb(255, 255, 255) -0.653644px -0.756802px 0px, rgb(255, 255, 255) 0.283662px -0.958924px 0px, rgb(255, 255, 255) 0.96017px -0.279415px 0px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Controls */
+.controls {
+    position: absolute;
+    left: 60px;
+    bottom: 15px;
+    display: flex;
+    gap: 15px;
+    z-index: 2;
+}
+
+.control-btn {
+    width: 25px;
+    height: 25px;
+    background: rgba(255, 182, 193, 0.9);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(42, 42, 42, 0.9);
+    font-size: 10px;
+    transition: all 0.3s ease;
+    font-family: Arial, sans-serif;
+    line-height: 1;
+    padding: 0;
+}
+
+.control-btn:hover {
+    background: rgba(42, 42, 42, 1);
+    transform: scale(1.1);
+    color: white;
+}
+
+/* Audio Visualizer */
+.audio-visualizer {
+    position: absolute;
+    right: 25px;
+    bottom: 15px;
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    z-index: 2;
+    height: 25px;
+}
+
+.audio-bar {
+    width: 4px;
+    background: rgba(255, 182, 193, 0.8);
+    border-radius: 2px;
+    transition: all 0.1s ease;
+    min-height: 8px;
+    border: 1px solid rgba(42, 42, 42, 0.2);
+}
+
+/* Progress Bar */
+.progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 0 0 25px 25px;
+    transition: width 1s linear;
+    z-index: 1;
+}
+
+/* Authentication Message */
+.auth-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.auth-message a {
+    color: #ff69b4;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Utility Classes */
+.hidden {
+    opacity: 0;
+    transition: opacity 0.5s ease-out;
+}
+
+/* Credits */
+.credits {
+    position: absolute;
+    bottom: 2px;
+    right: 5px;
+    font-size: 8px;
+    color: rgba(255, 255, 255, 0.3);
+    z-index: 1000;
+}
+
+.credits a {
+    color: rgba(255, 255, 255, 0.5);
+    text-decoration: none;
+}
+
+.credits a:hover {
+    color: rgba(255, 255, 255, 0.8);
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Player para Mi Shunita hermosa</title>
+    <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+    <div class="album-cover">
+        <img src="/assets/profile.jpg" alt="Profile Picture" id="albumCover">
+    </div>
+
+    <div class="player-container" id="player">
+        <div class="background-particles" id="particles"></div>
+
+        <div class="song-info">
+            <h3 class="song-title" id="songTitle">Conectando...</h3>
+            <p class="artist-name" id="artistName">Spotify</p>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn" id="prevBtn">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" />
+                </svg>
+            </button>
+            <button class="control-btn" id="playBtn">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z" />
+                </svg>
+            </button>
+            <button class="control-btn" id="nextBtn">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
+                </svg>
+            </button>
+        </div>
+
+        <div class="audio-visualizer" id="visualizer">
+            <!-- Las barras se generan dinámicamente -->
+        </div>
+
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="auth-message" id="authMessage" style="display: none;">
+        <h3>🎵 Conecta tu Spotify</h3>
+        <p>Para usar el widget necesitas autorizar el acceso</p>
+        <a href="/auth" target="_blank">Conectar Spotify</a>
+    </div>
+
+    <!-- GetSongBPM.com Credit (Required) -->
+    <div class="credits">
+        <a href="https://getsongbpm.com" target="_blank">BPM data by GetSongBPM.com</a>
+    </div>
+
+    <script src="/js/spotify-player.js"></script>
+</body>
+</html>
