@@ -19,8 +19,9 @@ WORKDIR /app
 # Copia solo los archivos necesarios
 COPY --from=base /app/node_modules ./node_modules
 COPY --from=base /app/dist ./dist
-COPY --from=base /app/public ./public
 COPY --from=base /app/package.json ./package.json
+# Copia public directamente del contexto de build
+COPY public ./public
 
 # Exponer puerto
 EXPOSE 8080
