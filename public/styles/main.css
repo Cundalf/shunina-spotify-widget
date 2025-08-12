@@ -269,7 +269,7 @@ body {
     position: absolute;
     bottom: 2px;
     right: 5px;
-    font-size: 8px;
+    font-size: 6px;
     color: rgba(255, 255, 255, 0.3);
     z-index: 1000;
 }
